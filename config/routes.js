@@ -9,6 +9,7 @@ module.exports = server => {
   server.post("/api/register", register);
   server.post("/api/login", login);
   server.get("/api/experiences", experiences);
+  server.get("/api/users", users);
 };
 
 ///// SANITY CHECK //////
@@ -76,7 +77,7 @@ function login(req, res) {
 ///// GET EXPERIENCES /////
 function experiences(req, res) {
   let experience = req.body;
-  Users.get(experience)
+  Users.getExperiences(experience)
     .then(experiences => {
       res.status(200).json({ experiences });
     })
@@ -86,4 +87,15 @@ function experiences(req, res) {
     });
 }
 
-/////
+///// GET USERS /////
+function users(req, res) {
+  let user = req.body;
+  Users.getUsers(user)
+    .then(users => {
+      res.status(200).json({ users });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ message: "Error getting users" });
+    });
+}
