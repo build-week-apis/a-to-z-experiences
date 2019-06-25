@@ -50,7 +50,7 @@ function login(req, res) {
         const token = generateToken(user);
 
         res.status(200).json({
-          message: `Welcome!`,
+          message: `Welcome ${user.username}!`,
           token //return the token upon login
         });
       } else {
