@@ -2,7 +2,7 @@
 const Users = require("./helpers.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { authenticate } = require("../auth/authenticate");
+const { authenticate, generateToken } = require("../auth/authenticate");
 
 module.exports = server => {
   server.get("/", testServer);
@@ -15,6 +15,8 @@ function testServer(req, res) {
   res.send("Hey girl!!");
 }
 
+///// GENERATE TOKEN /////
+
 ///// REGISTER /////
 function register(req, res) {
   // implement user registration
@@ -24,7 +26,9 @@ function register(req, res) {
 
   Users.add(user)
     .then(newUser => {
-      res.status(201).json(newUser);
+      const token = generateToken(newUser);
+      console.log("TOKEN:", token);
+      res.status(201).json({ newUser, token });
     })
     .catch(err => {
       console.log("register", err);
