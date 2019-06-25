@@ -8,6 +8,7 @@ module.exports = server => {
   server.get("/", testServer);
   server.post("/api/register", register);
   server.post("/api/login", login);
+  server.get("/api/experiences", experiences);
 };
 
 ///// SANITY CHECK //////
@@ -70,4 +71,18 @@ function login(req, res) {
       console.log("Login error", error);
       res.status(500).json({ message: "Login error" });
     });
+}
+
+///// GET EXPERIENCES /////
+function experiences(req, res) {
+  let experience = req.body;
+  Users.get(experience).then(experience => {
+    res
+      .status(200)
+      .json({ experience })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({ message: "Error getting experiences" });
+      });
+  });
 }
