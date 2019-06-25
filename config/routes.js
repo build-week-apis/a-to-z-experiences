@@ -1,8 +1,8 @@
-const axios = require("axios");
-const bcrypt = require("bcryptjs");
-
-const { authenticate, generateToken } = require("../auth/authenticate");
+// const axios = require("axios");
 const Users = require("./helpers.js");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { authenticate } = require("../auth/authenticate");
 
 module.exports = server => {
   server.get("/", testServer);
@@ -18,10 +18,11 @@ function testServer(req, res) {
 ///// REGISTER /////
 function register(req, res) {
   // implement user registration
-  const hash = bcrypt.hashSync(req.body.password, 14);
-  req.body.password = hash;
+  let user = req.body;
+  const hash = bcrypt.hashSync(user.password, 10);
+  user.password = hash;
 
-  Users.add(req.body)
+  Users.add(user)
     .then(newUser => {
       res.status(201).json(newUser);
     })
@@ -41,11 +42,12 @@ function login(req, res) {
     .first()
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
+        // generate token
         const token = generateToken(user);
-        res.status(200).json({
-          message: `Welcome ${user.username}!`,
 
-          token
+        res.status(200).json({
+          message: `Welcome!`,
+          token //return the token upon login
         });
       } else {
         res
@@ -53,8 +55,8 @@ function login(req, res) {
           .json({ message: "Wrong username or password. Try again." });
       }
     })
-    .catch(err => {
-      console.log("Login error", err);
+    .catch(error => {
+      console.log("Login error", error);
       res.status(500).json({ message: "Login error" });
     });
 }
