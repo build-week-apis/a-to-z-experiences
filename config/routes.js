@@ -76,13 +76,14 @@ function login(req, res) {
 ///// GET EXPERIENCES /////
 function experiences(req, res) {
   let experience = req.body;
-  Users.get(experience).then(experience => {
-    res
-      .status(200)
-      .json({ experience })
-      .catch(err => {
-        console.log(err);
-        res.status(500).json({ message: "Error getting experiences" });
-      });
-  });
+  Users.get(experience)
+    .then(experiences => {
+      res.status(200).json({ experiences });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ message: "Error getting experiences" });
+    });
 }
+
+/////
