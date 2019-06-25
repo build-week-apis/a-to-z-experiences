@@ -12,7 +12,7 @@ module.exports = server => {
 
 ///// SANITY CHECK //////
 function testServer(req, res) {
-  res.send("Hey girl!!");
+  res.send("Sanity Check!");
 }
 
 ///// GENERATE TOKEN /////
@@ -28,7 +28,13 @@ function register(req, res) {
     .then(newUser => {
       const token = generateToken(newUser);
       console.log("TOKEN:", token);
-      res.status(201).json({ newUser, token });
+      res.status(201).json({
+        message: `Welcome ${
+          user.username
+        }! You have been successfully registered!`,
+        newUser,
+        token
+      });
     })
     .catch(err => {
       console.log("register", err);
