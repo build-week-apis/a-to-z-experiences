@@ -10,6 +10,8 @@ module.exports = server => {
   server.post("/api/login", login);
   server.get("/api/experiences", experiences);
   server.get("/api/users", users);
+  server.get("/api/user/:id", userById);
+  server.get("/api/experiences/:id", experienceById);
 };
 
 ///// SANITY CHECK //////
@@ -97,5 +99,29 @@ function users(req, res) {
     .catch(err => {
       console.log(err);
       res.status(500).json({ message: "Error getting users" });
+    });
+}
+
+/////GET USER BY ID /////
+function userById(req, res) {
+  const id = req.params.id;
+  Users.getUserById(id)
+    .then(user => {
+      res.status(200).json(user);
+    })
+    .catch(err => {
+      res.status(500).json({ message: "error getting user by this id" });
+    });
+}
+
+/////GET EXPERIENCES BY ID /////
+function experienceById(req, res) {
+  const id = req.params.id;
+  Users.getExperienceById(id)
+    .then(experience => {
+      res.status(200).json(experience);
+    })
+    .catch(err => {
+      res.status(500).json({ message: "error getting experience by this id" });
     });
 }
