@@ -5,7 +5,8 @@ module.exports = {
   find,
   findBy,
   findById,
-  get
+  getExperiences,
+  getUsers
 };
 
 async function add(user) {
@@ -26,6 +27,10 @@ function findById(id) {
     .where({ id })
     .first();
 }
-function get() {
+function getExperiences() {
   return db("experiences");
+}
+
+function getUsers() {
+  return db("users");
 }
