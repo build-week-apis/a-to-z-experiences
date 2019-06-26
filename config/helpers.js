@@ -5,8 +5,10 @@ module.exports = {
   find,
   findBy,
   findById,
+  addExperience,
   getExperiences,
   getExperienceById,
+  deleteExperience,
   getUsers,
   getUserById,
   deleteUser
@@ -32,6 +34,10 @@ function findById(id) {
 }
 
 ///// EXPERIENCE /////
+function addExperience() {
+  return db("experiences");
+}
+
 function getExperiences() {
   return db("experiences");
 }
@@ -39,6 +45,12 @@ function getExperienceById(id) {
   return db("experiences")
     .where({ id })
     .first();
+}
+
+function deleteExperience(id) {
+  return db("experiences")
+    .where({ id })
+    .del();
 }
 
 ///// USERS /////
