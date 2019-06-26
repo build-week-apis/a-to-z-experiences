@@ -9,6 +9,8 @@ module.exports = {
   getExperiences,
   getExperienceById,
   deleteExperience,
+  editExperience,
+  getExperienceWithUserById,
   getUsers,
   getUserById,
   deleteUser
@@ -51,6 +53,20 @@ function deleteExperience(id) {
   return db("experiences")
     .where({ id })
     .del();
+}
+
+function editExperience(id, changes) {
+  return db("experiences")
+    .where({ id })
+    .update(changes);
+}
+
+function getExperienceWithUserById(id) {
+  return db("experiences")
+    .where({ "experiences.user_id": id })
+    .first()
+    .join("users", "users.id", "experiences.user_id")
+    .select("users.id", "users.username");
 }
 
 ///// USERS /////
