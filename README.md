@@ -18,3 +18,42 @@ Backend for A to Z build week project
 - [Cors](https://www.npmjs.com/package/cors): CORS is a Node.js package for providing a Connect/Express middleware that can be used to enable CORS
 - [Helmet](https://www.npmjs.com/package/helmet): Helmet helps you secure your Express apps by setting various HTTP headers
 - [Dotenv](https://www.npmjs.com/package/dotenv): Dotenv is a zero-dependency module that loads environment variables from a .env file
+
+###### Developer
+
+- [Nodemon](https://www.npmjs.com/package/nodemon): nodemon is a tool that helps develop Node.js based applications by automatically restarting the node application when file changes in the directory are detected
+
+# Setup
+
+(# <--- signifies comment)
+In your terminal run:
+
+```
+# Install dependencies
+npm install
+
+# Starts express server using nodemon
+npm run server
+```
+
+# Table of Contents
+
+- Auth Routes
+  - Login User
+  - Register User
+
+# AUTH ROUTES
+
+## REGISTER
+
+**Registers a user**
+Method Url: /api/register
+
+HTTP method: [POST]
+**Headers**
+| name | type | required | description |
+|------|------|----------|--------------|
+| Content-Type | String | Yes | Must be application/json|
+
+|||||
+|||||
