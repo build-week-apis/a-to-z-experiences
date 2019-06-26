@@ -38,7 +38,7 @@ function findById(id) {
 ///// EXPERIENCE /////
 async function addExperience(newExperience) {
   const [id] = await db("experiences").insert(newExperience);
-  return getExperienceById(id);
+  return getExperiences();
 }
 
 function getExperiences() {
