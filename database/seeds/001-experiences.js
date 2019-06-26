@@ -22,12 +22,20 @@ exports.seed = function(knex, Promise) {
           description: "Swimming lessons for the family"
         },
         {
-          user_id: 3,
+          user_id: 1,
           title: "Fishing",
           date: "11/12/19",
           location: "Princeton, NJ",
           price: "$15",
           description: "Family friendly fishing trip"
+        },
+        {
+          user_id: 1,
+          title: "Knitting",
+          date: "7/28/19",
+          location: "San Francisco, CA",
+          price: "$30",
+          description: "Knitting lessons for the family"
         }
       ]);
     });

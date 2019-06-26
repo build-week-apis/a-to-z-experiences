@@ -10,6 +10,7 @@ module.exports = server => {
   server.get("/api/users", users);
   server.get("/api/users/:id", userById);
   server.get("/api/experiences/:id", experienceById);
+  server.get("/api/users/experiences/:id", userExperiences);
   server.post("/api/register", register);
   server.post("/api/login", login);
   server.post("/api/experiences", postExperience);
@@ -141,6 +142,27 @@ function experienceById(req, res) {
     })
     .catch(err => {
       res.status(500).json({ message: "error getting experience by this id" });
+    });
+}
+
+///// GET USER EXPERIENCES /////
+function userExperiences(req, res) {
+  const id = req.params.id;
+
+  Users.getExperienceWithUserById(id)
+    .then(users => {
+      Users.getExperiences()
+        .where({ user_id: id })
+        .then(experiences => {
+          users.experiences = experiences;
+          return res.status(200).json(users);
+        })
+        .catch(err => {
+          res.status(500).json(err);
+        });
+    })
+    .catch(err => {
+      res.status(500).json(err);
     });
 }
 
