@@ -11,7 +11,7 @@ exports.up = function(knex, Promise) {
       .onUpdate("CASCADE");
 
     experience.string("title", 128).notNullable();
-    experience.date("date", 128).notNullable();
+    experience.string("date", 128).notNullable();
     experience.text("location", 128).notNullable();
     experience.string("price", 128);
     experience.string("description", 400);

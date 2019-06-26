@@ -36,8 +36,9 @@ function findById(id) {
 }
 
 ///// EXPERIENCE /////
-function addExperience() {
-  return db("experiences");
+function addExperience(newExperience) {
+  console.log(newExperience);
+  return db("experiences").insert(newExperience);
 }
 
 function getExperiences() {
