@@ -2,7 +2,7 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable("experiences", experience => {
     experience.increments();
     experience
-      .integer("user_id", 128)
+      .integer("user_id")
       .unsigned()
       .notNullable()
       .references("id")
@@ -11,8 +11,8 @@ exports.up = function(knex, Promise) {
       .onUpdate("CASCADE");
 
     experience.string("title", 128).notNullable();
-    experience.date("date", 128).notNullable();
-    experience.text("location", 128).notNullable();
+    experience.string("date", 128).notNullable();
+    experience.string("location", 128).notNullable();
     experience.string("price", 128);
     experience.string("description", 400);
   });
