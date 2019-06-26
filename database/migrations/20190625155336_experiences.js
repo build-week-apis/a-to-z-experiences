@@ -4,7 +4,6 @@ exports.up = function(knex, Promise) {
     experience
       .integer("user_id")
       .unsigned()
-      .notNullable()
       .references("id")
       .inTable("users")
       .onDelete("CASCADE")
