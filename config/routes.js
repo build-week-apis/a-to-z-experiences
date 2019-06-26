@@ -197,19 +197,19 @@ function updateExperience(req, res) {
   const id = req.params.id;
   const changes = req.body;
   const { title, date, description } = req.body;
-  if (!title || !date || !description) {
-    res
-      .status(400)
-      .json({ message: "Experiences require a title, date, and location." });
-  } else {
-    Users.editExperience(id, changes)
-      .then(updatedExperience => {
-        res.status(201).json(updatedExperience);
-      })
-      .catch(err => {
-        res.status(500).json(err);
-      });
-  }
+  // if (!title || !date || !description) {
+  //   res
+  //     .status(400)
+  //     .json({ message: "Experiences require a title, date, and location." });
+  // } else {
+  Users.editExperience(id, changes)
+    .then(updatedExperience => {
+      res.status(201).json(updatedExperience);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+  // }
 }
 
 /////UPDATE USER //////
@@ -225,10 +225,14 @@ function updateUser(req, res) {
   // } else {
   Users.editUser(id, changes)
     .then(updatedUser => {
-      res.status(201).json(updatedUser);
+      res.status(201).json({
+        message: `Your profile has been successfully updated`
+      });
     })
     .catch(err => {
-      res.status(500).json(err);
+      res.status(500).json({
+        message: `Error updating profile`
+      });
     });
   // }
 }
