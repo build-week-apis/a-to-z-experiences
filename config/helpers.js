@@ -13,6 +13,7 @@ module.exports = {
   getExperienceWithUserById,
   getUsers,
   getUserById,
+  editUser,
   deleteUser
 };
 
@@ -78,7 +79,23 @@ function getUsers() {
 function getUserById(id) {
   return db("users")
     .where({ id })
-    .first();
+    .first()
+    .select(
+      "users.id",
+      "users.username",
+      "users.name",
+      "users.location",
+      "users.description"
+    );
+  // db("experiences")
+  //   .where({ "experiences.user_id": id })
+  //   .join("users", "users.id", "experiences.user_id")
+}
+
+function editUser(id, changes) {
+  return db("users")
+    .where({ id })
+    .update(changes);
 }
 
 function deleteUser(id) {
