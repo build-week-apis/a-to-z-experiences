@@ -10,8 +10,9 @@ module.exports = server => {
   server.post("/api/login", login);
   server.get("/api/experiences", experiences);
   server.get("/api/users", users);
-  server.get("/api/user/:id", userById);
+  server.get("/api/users/:id", userById);
   server.get("/api/experiences/:id", experienceById);
+  server.delete("/api/users/:id", deleteUser);
 };
 
 ///// SANITY CHECK //////
@@ -123,5 +124,17 @@ function experienceById(req, res) {
     })
     .catch(err => {
       res.status(500).json({ message: "error getting experience by this id" });
+    });
+}
+
+///// DELETE USER /////
+function deleteUser(req, res) {
+  const id = req.params.id;
+  Users.deleteUser(id)
+    .then(deleted => {
+      res.status(200).json({ message: `${deleted} user was deleted.` });
+    })
+    .catch(err => {
+      res.status(500).json(err);
     });
 }

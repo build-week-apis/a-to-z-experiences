@@ -8,7 +8,8 @@ module.exports = {
   getExperiences,
   getExperienceById,
   getUsers,
-  getUserById
+  getUserById,
+  deleteUser
 };
 
 async function add(user) {
@@ -49,4 +50,10 @@ function getUserById(id) {
   return db("users")
     .where({ id })
     .first();
+}
+
+function deleteUser(id) {
+  return db("users")
+    .where({ id })
+    .del();
 }
