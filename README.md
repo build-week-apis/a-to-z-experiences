@@ -53,10 +53,10 @@ HTTP method: [POST]
 
 **Headers**
 | **name** | **type** | **required** | **description** |
-| ------------ | -------- | ------------ | ------------------------ |
+| -------- | ----- | ------------ | ------------------------ |
 | Content-Type | String | Yes | Must be application/json |
 
 **Body**
 | **name** | **type** | **required** | **description** |
-| ------------ | -------- | ------------ | ------------------------ |
+| ------------ | ------ | --- | ------------------------ |
 | Content-Type | String | Yes | Must be application/json |

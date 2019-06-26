@@ -6,13 +6,14 @@ const { authenticate, generateToken } = require("../auth/authenticate");
 
 module.exports = server => {
   server.get("/", testServer);
-  server.post("/api/register", register);
-  server.post("/api/login", login);
-  server.post("/api/experiences", postExperience);
   server.get("/api/experiences", experiences);
   server.get("/api/users", users);
   server.get("/api/users/:id", userById);
   server.get("/api/experiences/:id", experienceById);
+  server.post("/api/register", register);
+  server.post("/api/login", login);
+  server.post("/api/experiences", postExperience);
+  server.put("/api/experiences/:id", updateExperience);
   server.delete("/api/users/:id", deleteUser);
   server.delete("/api/experiences/:id", deleteExperience);
 };
@@ -21,8 +22,6 @@ module.exports = server => {
 function testServer(req, res) {
   res.send("Sanity Check!");
 }
-
-///// GENERATE TOKEN /////
 
 ///// REGISTER /////
 function register(req, res) {
@@ -167,4 +166,25 @@ function deleteExperience(req, res) {
     .catch(err => {
       res.status(500).json(err);
     });
+}
+
+///// UPDATE EXPERIENCE /////
+
+function updateExperience(req, res) {
+  const id = req.params.id;
+  const changes = req.body;
+  const { title, date, description } = req.body;
+  if (!title || !date || !description) {
+    res
+      .status(400)
+      .json({ message: "Experiences require a title, date, and location." });
+  } else {
+    Users.editExperience(id, changes)
+      .then(updatedExperience => {
+        res.status(201).json(updatedExperience);
+      })
+      .catch(err => {
+        res.status(500).json(err);
+      });
+  }
 }

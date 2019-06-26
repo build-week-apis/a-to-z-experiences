@@ -29,6 +29,8 @@ function authenticate(req, res, next) {
   }
 }
 
+///// GENERATE TOKEN /////
+
 function generateToken(user) {
   const payload = {
     subject: user.id,

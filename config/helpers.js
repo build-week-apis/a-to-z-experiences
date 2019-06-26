@@ -9,6 +9,7 @@ module.exports = {
   getExperiences,
   getExperienceById,
   deleteExperience,
+  editExperience,
   getUsers,
   getUserById,
   deleteUser
@@ -51,6 +52,12 @@ function deleteExperience(id) {
   return db("experiences")
     .where({ id })
     .del();
+}
+
+function editExperience(id, changes) {
+  return db("experiences")
+    .where({ id })
+    .update(changes);
 }
 
 ///// USERS /////
