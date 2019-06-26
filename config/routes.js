@@ -15,6 +15,7 @@ module.exports = server => {
   server.post("/api/login", login);
   server.post("/api/experiences", postExperience);
   server.put("/api/experiences/:id", updateExperience);
+  server.put("/api/users/:id", updateUser);
   server.delete("/api/users/:id", deleteUser);
   server.delete("/api/experiences/:id", deleteExperience);
 };
@@ -209,4 +210,25 @@ function updateExperience(req, res) {
         res.status(500).json(err);
       });
   }
+}
+
+/////UPDATE USER //////
+
+function updateUser(req, res) {
+  const id = req.params.id;
+  const changes = req.body;
+  // const { title, date, description } = req.body;
+  // if (!username || !password || !description) {
+  //   res
+  //     .status(400)
+  //     .json({ message: "Experiences require a title, date, and location." });
+  // } else {
+  Users.editUser(id, changes)
+    .then(updatedUser => {
+      res.status(201).json(updatedUser);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+  // }
 }
