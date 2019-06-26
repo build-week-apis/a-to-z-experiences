@@ -8,11 +8,13 @@ module.exports = server => {
   server.get("/", testServer);
   server.post("/api/register", register);
   server.post("/api/login", login);
+  server.post("/api/experiences", postExperience);
   server.get("/api/experiences", experiences);
   server.get("/api/users", users);
   server.get("/api/users/:id", userById);
   server.get("/api/experiences/:id", experienceById);
   server.delete("/api/users/:id", deleteUser);
+  server.delete("/api/experiences/:id", deleteExperience);
 };
 
 ///// SANITY CHECK //////
@@ -76,7 +78,23 @@ function login(req, res) {
       res.status(500).json({ message: "Login error" });
     });
 }
-
+///// POST EXPERIENCE /////
+function postExperience(req, res) {
+  const { title, date, location } = req.body;
+  if (!title || !date || !location) {
+    res.status(400).json({
+      message: "New experiences require a title, date, and location."
+    });
+  } else {
+    Users.addExperience(req.body)
+      .then(experience => {
+        res.status(201).json(experience);
+      })
+      .catch(err => {
+        res.status(500).json({ message: "error adding experience" });
+      });
+  }
+}
 ///// GET EXPERIENCES /////
 function experiences(req, res) {
   let experience = req.body;
@@ -133,6 +151,18 @@ function deleteUser(req, res) {
   Users.deleteUser(id)
     .then(deleted => {
       res.status(200).json({ message: `${deleted} user was deleted.` });
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+}
+
+///// DELETE EXPERIENCE /////
+function deleteExperience(req, res) {
+  const id = req.params.id;
+  Users.deleteExperience(id)
+    .then(deleted => {
+      res.status(200).json({ message: `${deleted} experience was deleted.` });
     })
     .catch(err => {
       res.status(500).json(err);
