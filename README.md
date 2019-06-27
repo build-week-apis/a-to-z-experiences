@@ -50,7 +50,9 @@ npm run server
   - [Get User by Id](#get-user-by-id)
   - [Update User](#update-user)
   - [Delete User](#delete-user)
-  - [Get Users Attending Experiences](#get-users-attending-experiences)
+  - [Get Experiences Users Attending](#get-experiences-users-attending)
+  - [RSVP User to Experience](#rsvp-user-to-experience)
+  - [Delete Experience Users Attending](#delete-experience-users-attending)
 
 - [Experience Routes](#experience-routes)
   - [Get Experiences](#get-experiences)
@@ -443,7 +445,7 @@ _example:_
 
 ```
 
-## **GET USERS ATTENDING EXPERIENCES**
+## **GET EXPERIENCES USERS ATTENDING**
 
 ### **Get the experiences your user has RSVPed for and will be attending**
 
@@ -498,7 +500,7 @@ _example:_
 
 ```
 
-## **RSVP USERS ATTENDING EXPERIENCES**
+## **RSVP USER TO EXPERIENCE**
 
 ### **RSVP to the experiences your user would like to attend**
 
@@ -565,7 +567,7 @@ _example:_
 
 ```
 
-## **DELETE USER ATTENDING EXPERIENCE**
+## **DELETE EXPERIENCE USERS ATTENDING **
 
 ### ** Un-RSVPs user from an experience they are attending **
 
