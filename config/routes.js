@@ -18,6 +18,7 @@ module.exports = server => {
   server.put("/api/users/:id", updateUser);
   server.delete("/api/users/:id", deleteUser);
   server.delete("/api/experiences/:id", deleteExperience);
+  server.get("/api/users/:id/experiences", usersExperiences);
 };
 
 ///// SANITY CHECK //////
@@ -235,4 +236,20 @@ function updateUser(req, res) {
       });
     });
   // }
+}
+
+///// GET HOST EXPERIENCES /////
+
+function usersExperiences(req, res) {
+  const id = req.params.id;
+  Users.getUsersExperiences(id)
+    .then(event => {
+      console.log("event:", event);
+      res.status(200).json(event);
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: `Error getting hosts events`
+      });
+    });
 }
