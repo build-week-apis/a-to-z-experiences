@@ -15,7 +15,9 @@ module.exports = {
   getUserById,
   editUser,
   deleteUser,
-  getUsersExperiences
+  getUsersAttendingExperiences,
+  addUsersAttendingExperiences,
+  deleteUsersAttendingExperiences
 };
 
 async function add(user) {
@@ -120,13 +122,31 @@ function deleteUser(id) {
     .del();
 }
 
-async function getUsersExperiences(id) {
+async function getUsersAttendingExperiences(id) {
   try {
     console.log("id:", id);
     const event = await db("attendance")
       .join("experiences", "attendance.experience_id", "experiences.id")
       .where("attendance.user_id", id);
 
-    return event;
+    return "user.username", event;
   } catch (error) {}
+}
+
+async function deleteUsersAttendingExperiences(id) {
+  try {
+    console.log("id:", id);
+    const event = await db("attendance")
+      .join("experiences", "attendance.experience_id", "experiences.id")
+      .where("attendance.user_id", id)
+      .del(id);
+
+    return "user.username", event;
+  } catch (error) {}
+}
+
+async function addUsersAttendingExperiences(attend) {
+  const id = await db("attendance").insert(attend);
+
+  return id;
 }
