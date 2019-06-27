@@ -44,7 +44,7 @@ function userHostExperiences(req, res) {
 
   Experiences.getExperienceWithUserById(id)
     .then(users => {
-      Users.getExperiences()
+      Experiences.getExperiences()
         .where({ user_id: id })
         .then(experiences => {
           users.experiences = experiences;
@@ -109,7 +109,7 @@ function updateExperience(req, res) {
 ///// DELETE EXPERIENCE /////
 function deleteExperience(req, res) {
   const id = req.params.id;
-  Users.deleteExperience(id)
+  Experiences.deleteExperience(id)
     .then(deleted => {
       res.status(200).json({ message: `${deleted} experience was deleted.` });
     })
