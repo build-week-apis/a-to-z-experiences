@@ -2,30 +2,6 @@
 
 Backend for A to Z build week project
 
-```
-#temporary endpoint cheat sheet
-
-
-**Auth endpoints**
-*Register: /api/register
-*Login: /api/login
-
-**User endpoints**
-*get all users: /api/users
-*get users by id: /api/users/:id
-*update user: /api/users/:id
-*delete user: /api/users/:id
-*get users registered experiences: /api/users/:id/experiences
-
-**Experience endpoints**
-*get experiences: /api/experiences
-*get experience by id: /api/experiences/:id
-*get experiences added by user(host): api/users/experiences/:id
-*add new experience: /api/experiences
-*update experience: /api/experiences/:id
-*delete experience: /api/experiences/:id
-```
-
 # Deployed Backend
 
 [https://atoz-backend.herokuapp.com]
