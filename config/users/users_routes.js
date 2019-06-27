@@ -5,7 +5,7 @@ module.exports = server => {
   server.get("/api/users/:id", userById);
   server.put("/api/users/:id", updateUser);
   server.delete("/api/users/:id", deleteUser);
-  server.get("/api/users/:id/experiences", usersAttendingExperiences);
+  server.get("/api/users/:id/experiences_attending", usersAttendingExperiences);
   server.post("/api/experiences/attend", addUsersAttendingExperiences);
   server.delete("/api/users/:id/experiences", deleteAttendingExperience);
 };
