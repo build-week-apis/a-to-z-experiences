@@ -111,21 +111,6 @@ async function getUsersExperiences(id) {
   try {
     console.log("id:", id);
     const event = await db("attendance")
-      // .select(
-      //   "attendance.user_id",
-      //   "attendance.experience_id",
-      //   "users.name",
-      //   "users.location",
-      //   "users.username",
-      //   "users.name",
-      //   "users.description",
-      //   "experiences.id",
-      //   "experiences.title",
-      //   "experiences.date",
-      //   "experiences.location",
-      //   "experiences.price",
-      //   "experiences.description"
-      // )
       .join("experiences", "attendance.experience_id", "experiences.id")
       .where("attendance.user_id", id);
 

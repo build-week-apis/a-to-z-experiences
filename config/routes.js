@@ -47,7 +47,9 @@ function register(req, res) {
     })
     .catch(err => {
       console.log("register", err);
-      res.status(500).json({ message: "Error registering user" });
+      res
+        .status(500)
+        .json({ message: "Sorry, but something went wrong while registering" });
     });
 }
 
@@ -77,7 +79,9 @@ function login(req, res) {
     })
     .catch(error => {
       console.log("Login error", error);
-      res.status(500).json({ message: "Login error" });
+      res
+        .status(500)
+        .json({ message: "Sorry, but something went wrong while logging in" });
     });
 }
 ///// POST EXPERIENCE /////

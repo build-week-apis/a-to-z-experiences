@@ -15,6 +15,7 @@ Backend for A to Z build week project
 - [Jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken): Generate and verify json web tokens to maintain a stateless api
 - [Knex](https://www.npmjs.com/package/knex): Knex.js is a "batteries included" SQL query builder for Postgres, MSSQL, MySQL, MariaDB, SQLite3, Oracle, and Amazon Redshift designed to be flexible, portable, and fun to use
 - [Sqlite3](https://www.npmjs.com/package/sqlite3): Asynchronous, non-blocking SQLite3 bindings for Node.js.
+- [Morgan](https://www.npmjs.com/package/morgan): `HTTP request logger middleware for Node.js`
 - [Cors](https://www.npmjs.com/package/cors): CORS is a Node.js package for providing a Connect/Express middleware that can be used to enable CORS
 - [Helmet](https://www.npmjs.com/package/helmet): Helmet helps you secure your Express apps by setting various HTTP headers
 - [Dotenv](https://www.npmjs.com/package/dotenv): Dotenv is a zero-dependency module that loads environment variables from a .env file
@@ -44,19 +45,152 @@ npm run server
 
 # AUTH ROUTES
 
-## REGISTER
+## **REGISTER**
 
-**Registers a user**
-Method Url: /api/register
+### **Registers a user**
 
-HTTP method: [POST]
+_Method Url:_ `/api/register`
 
-**Headers**
-| **name** | **type** | **required** | **description** |
-| -------- | ----- | ------------ | ------------------------ |
-| Content-Type | String | Yes | Must be application/json |
+_HTTP method:_ **[POST]**
 
-**Body**
-| **name** | **type** | **required** | **description** |
-| ------------ | ------ | --- | ------------------------ |
-| Content-Type | String | Yes | Must be application/json |
+#### Headers
+
+| name           | type   | required | description              |
+| -------------- | ------ | -------- | ------------------------ |
+| `Content-Type` | String | Yes      | Must be application/json |
+
+#### Body
+
+| name          | type   | required | description    |
+| ------------- | ------ | -------- | -------------- |
+| `username`    | String | Yes      | Must be unique |
+| `password`    | String | Yes      |                |
+| `name`        | String | No       |                |
+| `location`    | String | No       |                |
+| `description` | String | No       |                |
+
+_example:_
+
+```
+
+{
+  "username": "username"
+  "password": "password123",
+  "name": "First Last",
+  "location": "San Francisco, CA",
+  "description": "Description of user to be shared with other users",
+}
+
+```
+
+#### Response
+
+##### 201 (Created)
+
+> If you successfully register a user the endpoint will return an HTTP response with a status code `201`,message, and a token as below.
+
+_example:_
+
+```
+{
+  "message": "Welcome user! You have been successfully registered!"
+},
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI3IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTQ0MzM1NjUxLCJleHAiOjE1NzU4OTMyNTF9.uqd2OHBYkGQpwjLTPPiPWYkYOKlG7whQDFkk46xFXoX"
+}
+
+```
+
+##### 500 (Internal Server Error)
+
+> If there is a server or database error, the endpoint will return an HTTP response with a status code `500` and a body as below.
+
+_example:_
+
+```
+
+{
+  "message": "Sorry, but something went wrong while registering"
+}
+
+```
+
+---
+
+## **LOGIN**
+
+### **Logs a user in**
+
+_Method Url:_ `/api/login`
+
+_HTTP method:_ **[POST]**
+
+#### Headers
+
+| name           | type   | required | description              |
+| -------------- | ------ | -------- | ------------------------ |
+| `Content-Type` | String | Yes      | Must be application/json |
+
+#### Body
+
+| name       | type   | required | description                                                        |
+| ---------- | ------ | -------- | ------------------------------------------------------------------ |
+| `username` | String | Yes      | Must match a username in the database                              |
+| `password` | String | Yes      | Must match a password in the database corresponding to email above |
+
+_example:_
+
+```
+{
+  "message": "Welcome, user!"
+},
+{
+  "username": "username"
+  "password": "password123",
+}
+
+```
+
+#### Response
+
+##### 200 (OK)
+
+> If you successfully login, the endpoint will return an HTTP response with a status code `200`, message, and a token as below.
+
+_example:_
+
+```
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MDwiaWF0IjoxNTQ0MzM1NjUxLCJleHAuOjE1NzU4OTMyNTF9.uqd2OHBYkGQpwjLTPPiPWYkYOKlG7whQDFkk46xGXnE",
+}
+
+```
+
+##### 401 (Unauthorized)
+
+> If you fail to login, the endpoint will return an HTTP response with a status code `401` which indicates the username and/or password entered is not valid.
+
+_example:_
+
+```
+
+{
+  message: "Wrong username or password. Try again."
+}
+
+```
+
+##### 500 (Bad Request)
+
+> If there is a server or database error, the endpoint will return an HTTP response with a status code `500` and a body as below.
+
+_example:_
+
+```
+
+{
+  "message": "Sorry, but something went wrong while logging in"
+}
+
+```
