@@ -10,7 +10,7 @@ module.exports = server => {
   server.get("/api/users", users);
   server.get("/api/users/:id", userById);
   server.get("/api/experiences/:id", experienceById);
-  server.get("/api/users/experiences/:id", userExperiences);
+  server.get("/api/users/experiences/:id", userHostExperiences);
   server.post("/api/register", register);
   server.post("/api/login", login);
   server.post("/api/experiences", postExperience);
@@ -18,7 +18,7 @@ module.exports = server => {
   server.put("/api/users/:id", updateUser);
   server.delete("/api/users/:id", deleteUser);
   server.delete("/api/experiences/:id", deleteExperience);
-  server.get("/api/users/:id/experiences", usersExperiences);
+  server.get("/api/users/:id/experiences", usersAttendingExperiences);
 };
 
 ///// SANITY CHECK //////
@@ -54,7 +54,6 @@ function register(req, res) {
 }
 
 ///// LOGIN /////
-
 function login(req, res) {
   // implement user login
   let { username, password } = req.body;
@@ -89,7 +88,7 @@ function postExperience(req, res) {
   const { title, date, location } = req.body;
   if (!title || !date || !location) {
     res.status(400).json({
-      message: "New experiences require a title, date, and location."
+      message: "Sorry, all new experiences require a title, date, and location."
     });
   } else {
     Users.addExperience(req.body)
@@ -97,7 +96,9 @@ function postExperience(req, res) {
         res.status(201).json(experience);
       })
       .catch(err => {
-        res.status(500).json({ message: "error adding experience" });
+        res.status(500).json({
+          message: "Sorry, but something went wrong while added the experience"
+        });
       });
   }
 }
@@ -110,7 +111,9 @@ function experiences(req, res) {
     })
     .catch(err => {
       console.log(err);
-      res.status(500).json({ message: "Error getting experiences" });
+      res
+        .status(500)
+        .json({ message: "Sorry, Theres been an error getting experiences" });
     });
 }
 
@@ -150,12 +153,14 @@ function experienceById(req, res) {
       res.status(200).json(experience);
     })
     .catch(err => {
-      res.status(500).json({ message: "error getting experience by this id" });
+      res.status(500).json({
+        message: "Sorry, but something went wrong while getting that experience"
+      });
     });
 }
 
 ///// GET USER EXPERIENCES /////
-function userExperiences(req, res) {
+function userHostExperiences(req, res) {
   const id = req.params.id;
 
   Users.getExperienceWithUserById(id)
@@ -171,7 +176,10 @@ function userExperiences(req, res) {
         });
     })
     .catch(err => {
-      res.status(500).json(err);
+      res.status(500).json({
+        message:
+          "Sorry, but something went wrong while getting that hosts experiences"
+      });
     });
 }
 
@@ -199,12 +207,16 @@ function deleteExperience(req, res) {
       res.status(200).json({ message: `${deleted} experience was deleted.` });
     })
     .catch(err => {
-      res.status(500).json(err);
+      res
+        .status(500)
+        .json({
+          message:
+            "Sorry, but something went wrong while deleting that experience"
+        });
     });
 }
 
 ///// UPDATE EXPERIENCE /////
-
 function updateExperience(req, res) {
   const id = req.params.id;
   const changes = req.body;
@@ -216,16 +228,23 @@ function updateExperience(req, res) {
   // } else {
   Users.editExperience(id, changes)
     .then(updatedExperience => {
-      res.status(201).json(updatedExperience);
+      res
+        .status(201)
+        .json(
+          { message: "Your experience has been successfully update" },
+          updatedExperience
+        );
     })
     .catch(err => {
-      res.status(500).json(err);
+      res.status(500).json({
+        message:
+          "Sorry, but something went wrong while updating that experience"
+      });
     });
   // }
 }
 
 /////UPDATE USER //////
-
 function updateUser(req, res) {
   const id = req.params.id;
   const changes = req.body;
@@ -249,9 +268,8 @@ function updateUser(req, res) {
   // }
 }
 
-///// GET HOST EXPERIENCES //////
-
-function usersExperiences(req, res) {
+///// GET USERS ATTENDING EXPERIENCES //////
+function usersAttendingExperiences(req, res) {
   const id = req.params.id;
   Users.getUsersExperiences(id)
     .then(event => {
@@ -260,7 +278,7 @@ function usersExperiences(req, res) {
     })
     .catch(err => {
       res.status(500).json({
-        message: `Error getting hosts events`
+        message: `Error getting users attending experiences`
       });
     });
 }
