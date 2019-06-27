@@ -72,9 +72,10 @@ function getExperienceWithUserById(id) {
     .select(
       "users.id",
       "users.username",
-      "users.name",
-      "users.location",
-      "users.description"
+      "users.first_name",
+      "users.last_name",
+      "users.email",
+      "users.city"
     );
 }
 
@@ -83,9 +84,10 @@ function getUsers() {
   return db("users").select(
     "users.id",
     "users.username",
-    "users.name",
-    "users.location",
-    "users.description"
+    "users.first_name",
+    "users.last_name",
+    "users.email",
+    "users.city"
   );
 }
 
@@ -96,9 +98,10 @@ function getUserById(id) {
     .select(
       "users.id",
       "users.username",
-      "users.name",
-      "users.location",
-      "users.description"
+      "users.first_name",
+      "users.last_name",
+      "users.email",
+      "users.city"
     );
   // db("experiences")
   //   .where({ "experiences.user_id": id })
