@@ -1,4 +1,21 @@
-const faker = require("faker");
+// const faker = require("faker");
+
+// const createFakeExperiences = () => ({
+//   title: faker.lorem.words(),
+//   date: faker.date.future(),
+//   location: faker.address.city(),
+//   price: faker.random.number(),
+//   description: faker.lorem.sentences()
+// });
+// exports.seed = async function(knex, Promise) {
+//   //experiences
+//   const fakeExperiences = [];
+//   const desiredFakeExperiences = 15;
+//   for (let i = 0; i < desiredFakeExperiences; i++) {
+//     fakeExperiences.push(createFakeExperiences());
+//   }
+//   await knex("experiences").insert(fakeExperiences);
+// };
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
   return knex("experiences")
