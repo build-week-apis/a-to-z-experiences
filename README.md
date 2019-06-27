@@ -53,7 +53,6 @@ npm run server
   - [Get Users Attending Experiences](#get-users-attending-experiences)
 
 - [Experience Routes](#experience-routes)
-
   - [Get Experiences](#get-experiences)
   - [Get Experiences by Id](#get-experiences-by-id)
   - [Get Experience Added by Host User](#get-experience-added-by-host-user)
