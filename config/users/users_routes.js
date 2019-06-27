@@ -3,11 +3,14 @@ const Users = require("../helpers.js");
 module.exports = server => {
   server.get("/api/users", users);
   server.get("/api/users/:id", userById);
+  server.get("/api/users/:id/experiences_attending", usersAttendingExperiences);
   server.put("/api/users/:id", updateUser);
-  server.delete("/api/users/:id", deleteUser);
-  server.get("/api/users/:id/experiences", usersAttendingExperiences);
   server.post("/api/experiences/attend", addUsersAttendingExperiences);
-  server.delete("/api/users/:id/experiences", deleteAttendingExperience);
+  server.delete("/api/users/:id", deleteUser);
+  server.delete(
+    "/api/users/:id/experiences_attending",
+    deleteAttendingExperience
+  );
 };
 
 ///// GET USERS /////
@@ -100,12 +103,12 @@ function addUsersAttendingExperiences(req, res) {
     .then(event => {
       console.log("experience:", attend);
       res.status(200).json({
-        message: `You have successfully registered for this event! See you there!`
+        message: `You have successfully registered for this experience! See you there!`
       });
     })
     .catch(err => {
       res.status(500).json({
-        message: `Error adding users attending experiences`
+        message: `Sorry, there was an error registering for the experience`
       });
     });
 }
@@ -121,7 +124,8 @@ function deleteAttendingExperience(req, res) {
     })
     .catch(err => {
       res.status(500).json({
-        message: "Sorry, but something went wrong."
+        message:
+          "Sorry, but something went wrong while deleting that experience."
       });
     });
 }

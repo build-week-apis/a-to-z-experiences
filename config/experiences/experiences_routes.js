@@ -3,7 +3,7 @@ const Experiences = require("../helpers.js");
 module.exports = server => {
   server.get("/api/experiences", experiences);
   server.get("/api/experiences/:id", experienceById);
-  server.get("/api/users/experiences/:id", userHostExperiences);
+  server.get("/api/users/:id/host_experiences", userHostExperiences);
   server.post("/api/experiences", postExperience);
   server.put("/api/experiences/:id", updateExperience);
   server.delete("/api/experiences/:id", deleteExperience);
