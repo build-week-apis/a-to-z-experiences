@@ -244,11 +244,10 @@ _example:_
 {
   "id": 1,
   "username": "username"
-  "password": "$2a$10$PNjMLdKfpOmusTou0JC6qOvhi74b21TbMkvRq3Bb5ionOr703leD2",
-  "name": "First Last",
-  "location": "San Francisco, CA",
-  "description": "Description of user to be shared with other users",
-
+  "first_name": "First Name",
+  "last_name": "Last Name",
+  "email": "Email@email.com",
+  "city": "NYC"
 }
 
 ```
@@ -280,7 +279,7 @@ _HTTP method:_ **[GET]**
 | name            | type   | required | description              |
 | --------------- | ------ | -------- | ------------------------ |
 | `Content-Type`  | String | Yes      | Must be application/json |
-| `Authorization` | String | Yes      | JSON Web Token           |
+| `Authorization` | String | No       | JSON Web Token           |
 
 #### Response
 
@@ -295,10 +294,10 @@ _example:_
 {
   "id": 1,
   "username": "username"
-  "password": "$2a$10$PNjMLdKfpOmusTou0JC6qOvhi74b21TbMkvRq3Bb5ionOr703leD2",
-  "name": "First Last",
-  "location": "San Francisco, CA",
-  "description": "Description of user to be shared with other users",
+  "first_name": "First Name",
+  "last_name": "Last Name",
+  "email": "Email@email.com",
+  "city": "NYC"
 }
 
 ```
@@ -340,12 +339,13 @@ _HTTP method:_ **[PUT]**
 
 #### Body
 
-| name          | type   | required | description |
-| ------------- | ------ | -------- | ----------- |
-| `username`    | String | No       |             |
-| `name`        | String | No       |             |
-| `location`    | String | No       |             |
-| `description` | String | No       |             |
+| name         | type   | required | description |
+| ------------ | ------ | -------- | ----------- |
+| `username`   | String | No       |             |
+| `first_name` | String | No       |             |
+| `last_name`  | String | No       |             |
+| `email`      | String | No       |             |
+| `city`       | String | No       |             |
 
 _example:_
 
@@ -354,8 +354,10 @@ _example:_
 {
   "username": "username",
   "name": "First Last",
-  "location": "Brooklyn, NY",
-  "description": "description of user"
+  "first_name": "First Name",
+  "last_name": "Last Name",
+  "email": "Email@email.com",
+  "city": "NYC"
 }
 
 ```
@@ -443,9 +445,11 @@ _example:_
 
 ## **GET USERS ATTENDING EXPERIENCES**
 
-### **Get the experiences your user will be attending**
+### **Get the experiences your user has RSVPed for and will be attending**
 
-_Method Url:_ `/api/users/:id/experiences`
+The user_id is reserved for the user who created the experience
+
+_Method Url:_ `/api/users/:id/experiences_attending`
 
 _HTTP method:_ **[GET]**
 
@@ -467,15 +471,16 @@ _example:_
 ```
 
 {
+  "user_id": 18,
+  "experience_id": 1,
   "id": 1,
-  "username": "username"
-  "name": "First Last",
-  "location": "San Francisco, CA",
-  "description": "Description of user to be shared with other users",
-  "experiences": {
-
-  }
+  "title": "Arts",
+  "date": "date",
+  "location": "location",
+  "price": "$20",
+  "description": "Art lessons for all ages"
 }
+
 
 ```
 
@@ -491,6 +496,125 @@ _example:_
   "message": "Error getting users attending experiences"
 }
 
+```
+
+## **RSVP USERS ATTENDING EXPERIENCES**
+
+### **RSVP to the experiences your user would like to attend**
+
+The user_id is reserved for the user who created the experience
+
+_Method Url:_ `/api/experiences/attend`
+
+_HTTP method:_ **[POST]**
+
+#### Headers
+
+| name            | type   | required | description              |
+| --------------- | ------ | -------- | ------------------------ |
+| `Content-Type`  | String | Yes      | Must be application/json |
+| `Authorization` | String | Yes      | JSON Web Token           |
+
+#### Body
+
+| name            | type   | required | description    |
+| --------------- | ------ | -------- | -------------- |
+| `user_id`       | String | Yes      | Must be unique |
+| `experience_id` | String | Yes      |                |
+
+_example:_
+
+```
+
+{
+  "user_id": 18,
+  "experience_id": 1
+}
+
+```
+
+#### Response
+
+##### 200 (OK)
+
+> If the user is RSVPed for experience, the endpoint will return an HTTP response with a status code 200 and a body as below.
+
+_example:_
+
+```
+
+{
+    "message": "You have successfully registered for this experience! See you there!"
+}
+
+
+
+```
+
+#### 500 (Internal Server Error)
+
+> If there is a server or database error, the endpoint will return an HTTP response with a status code `500` and a body as below.
+
+_example:_
+
+```
+
+{
+  "message": "Sorry, there was an error registering for the experience"
+}
+
+```
+
+## **DELETE USER ATTENDING EXPERIENCE**
+
+### ** Un-RSVPs user from an experience they are attending **
+
+\*STILL BUGGY!\*
+
+_Method Url:_ `/api/users/:id/experiences_attending`
+
+_HTTP method:_ **[DELETE]**
+
+#### Headers
+
+| name            | type   | required | description              |
+| --------------- | ------ | -------- | ------------------------ |
+| `Content-Type`  | String | Yes      | Must be application/json |
+| `Authorization` | String | Yes      | JSON Web Token           |
+
+#### Parameters
+
+| name | type    | required | description             |
+| ---- | ------- | -------- | ----------------------- |
+| id   | Integer | Yes      | ID of a specific seeker |
+
+#### Response
+
+##### 200 (OK)
+
+> If a user with the specified ID in the URL parameters is deleted successfully in the database, the endpoint will return an HTTP response with a status code `200` and a body as below.
+
+_example:_
+
+```
+
+{
+  "message": "You are no longer attending this experience"
+}
+
+```
+
+#### 500 (Bad Request)
+
+> If you send in invalid fields, the endpoint will return an HTTP response with a status code `500` and a body as below.
+
+_example:_
+
+```
+
+{
+  "message": "Sorry, but something went wrong while deleting that experience."
+}
 ```
 
 # EXPERIENCE ROUTES
@@ -603,7 +727,7 @@ _example:_
 
 ### **Get all experiences added by a particular host user**
 
-_Method Url:_ `api/users/experiences/:id`
+_Method Url:_ `/api/users/:id/host_experiences`
 
 _HTTP method:_ **[GET]**
 
@@ -625,8 +749,12 @@ _example:_
 ```
 
 {
- "id": 1,
+  "id": 1,
   "username": "new",
+  "first_name": "First Name",
+  "last_name": "Last Name",
+  "email": "Email@email.com",
+  "city": "NYC"
   "experiences": [
     {
         "id": 1,
