@@ -78,13 +78,14 @@ _HTTP method:_ **[POST]**
 
 #### Body
 
-| name          | type   | required | description    |
-| ------------- | ------ | -------- | -------------- |
-| `username`    | String | Yes      | Must be unique |
-| `password`    | String | Yes      |                |
-| `name`        | String | No       |                |
-| `location`    | String | No       |                |
-| `description` | String | No       |                |
+| name         | type   | required | description    |
+| ------------ | ------ | -------- | -------------- |
+| `username`   | String | Yes      | Must be unique |
+| `password`   | String | Yes      |                |
+| `first_name` | String | Yes      |                |
+| `last_name`  | String | Yes      |                |
+| `email`      | String | No       |                |
+| `city`       | String | No       |                |
 
 _example:_
 
@@ -93,9 +94,10 @@ _example:_
 {
   "username": "username"
   "password": "password123",
-  "name": "First Last",
-  "location": "San Francisco, CA",
-  "description": "Description of user to be shared with other users",
+  "first_name": "First Name",
+  "last_name": "Last Name",
+  "email": "Email@email.com",
+  "city": "NYC",
 }
 
 ```
