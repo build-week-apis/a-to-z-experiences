@@ -18,6 +18,7 @@ module.exports = server => {
   server.put("/api/users/:id", updateUser);
   server.delete("/api/users/:id", deleteUser);
   server.delete("/api/experiences/:id", deleteExperience);
+  server.get("/api/users/:id/experiences", usersExperiences);
 };
 
 ///// SANITY CHECK //////
@@ -46,7 +47,9 @@ function register(req, res) {
     })
     .catch(err => {
       console.log("register", err);
-      res.status(500).json({ message: "Error registering user" });
+      res
+        .status(500)
+        .json({ message: "Sorry, but something went wrong while registering" });
     });
 }
 
@@ -76,7 +79,9 @@ function login(req, res) {
     })
     .catch(error => {
       console.log("Login error", error);
-      res.status(500).json({ message: "Login error" });
+      res
+        .status(500)
+        .json({ message: "Sorry, but something went wrong while logging in" });
     });
 }
 ///// POST EXPERIENCE /////
@@ -130,7 +135,10 @@ function userById(req, res) {
       res.status(200).json(user);
     })
     .catch(err => {
-      res.status(500).json({ message: "error getting user by this id" });
+      res.status(500).json({
+        message:
+          "Sorry, but something went wrong while getting that user profile"
+      });
     });
 }
 
@@ -172,10 +180,14 @@ function deleteUser(req, res) {
   const id = req.params.id;
   Users.deleteUser(id)
     .then(deleted => {
-      res.status(200).json({ message: `${deleted} user was deleted.` });
+      res
+        .status(200)
+        .json({ message: `${deleted} successfully user was deleted.` });
     })
     .catch(err => {
-      res.status(500).json(err);
+      res.status(500).json(err, {
+        message: "Sorry, but something went wrong while deleting that user"
+      });
     });
 }
 
@@ -197,19 +209,19 @@ function updateExperience(req, res) {
   const id = req.params.id;
   const changes = req.body;
   const { title, date, description } = req.body;
-  if (!title || !date || !description) {
-    res
-      .status(400)
-      .json({ message: "Experiences require a title, date, and location." });
-  } else {
-    Users.editExperience(id, changes)
-      .then(updatedExperience => {
-        res.status(201).json(updatedExperience);
-      })
-      .catch(err => {
-        res.status(500).json(err);
-      });
-  }
+  // if (!title || !date || !description) {
+  //   res
+  //     .status(400)
+  //     .json({ message: "Experiences require a title, date, and location." });
+  // } else {
+  Users.editExperience(id, changes)
+    .then(updatedExperience => {
+      res.status(201).json(updatedExperience);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+  // }
 }
 
 /////UPDATE USER //////
@@ -225,10 +237,30 @@ function updateUser(req, res) {
   // } else {
   Users.editUser(id, changes)
     .then(updatedUser => {
-      res.status(201).json(updatedUser);
+      res.status(201).json({
+        message: `Your profile has been successfully updated`
+      });
     })
     .catch(err => {
-      res.status(500).json(err);
+      res.status(500).json({
+        message: `Sorry, but something went wrong while updating that profile`
+      });
     });
   // }
+}
+
+///// GET HOST EXPERIENCES /////
+
+function usersExperiences(req, res) {
+  const id = req.params.id;
+  Users.getUsersExperiences(id)
+    .then(event => {
+      console.log("event:", event);
+      res.status(200).json(event);
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: `Error getting hosts events`
+      });
+    });
 }
