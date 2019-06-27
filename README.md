@@ -371,9 +371,9 @@ _example:_
 
 ```
 
-## **DELETE SEEKER**
+## **DELETE USER**
 
-### **Delete a seeker by user id**
+### **Delete a USER by user id**
 
 _Method Url:_ `/api/users/:id`
 
