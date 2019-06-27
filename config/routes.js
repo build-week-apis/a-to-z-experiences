@@ -249,7 +249,7 @@ function updateUser(req, res) {
   // }
 }
 
-///// GET HOST EXPERIENCES /////
+///// GET HOST EXPERIENCES //////
 
 function usersExperiences(req, res) {
   const id = req.params.id;
