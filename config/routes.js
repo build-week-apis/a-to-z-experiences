@@ -135,7 +135,10 @@ function userById(req, res) {
       res.status(200).json(user);
     })
     .catch(err => {
-      res.status(500).json({ message: "error getting user by this id" });
+      res.status(500).json({
+        message:
+          "Sorry, but something went wrong while getting that user profile"
+      });
     });
 }
 
@@ -177,10 +180,14 @@ function deleteUser(req, res) {
   const id = req.params.id;
   Users.deleteUser(id)
     .then(deleted => {
-      res.status(200).json({ message: `${deleted} user was deleted.` });
+      res
+        .status(200)
+        .json({ message: `${deleted} successfully user was deleted.` });
     })
     .catch(err => {
-      res.status(500).json(err);
+      res.status(500).json(err, {
+        message: "Sorry, but something went wrong while deleting that user"
+      });
     });
 }
 
@@ -236,7 +243,7 @@ function updateUser(req, res) {
     })
     .catch(err => {
       res.status(500).json({
-        message: `Error updating profile`
+        message: `Sorry, but something went wrong while updating that profile`
       });
     });
   // }

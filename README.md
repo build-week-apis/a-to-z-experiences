@@ -194,3 +194,230 @@ _example:_
 }
 
 ```
+
+# USERS ROUTES
+
+## **GET USER**
+
+### **Get all users**
+
+_Method Url:_ `/api/users`
+
+_HTTP method:_ **[GET]**
+
+#### Headers
+
+| name            | type   | required | description              |
+| --------------- | ------ | -------- | ------------------------ |
+| `Content-Type`  | String | Yes      | Must be application/json |
+| `Authorization` | String | Yes      | JSON Web Token           |
+
+#### Response
+
+##### 200 (OK)
+
+> The endpoint will return an HTTP response with a status code 200 and a body as below.
+
+_example:_
+
+```
+
+{
+  "id": 1,
+  "username": "username"
+  "password": "$2a$10$PNjMLdKfpOmusTou0JC6qOvhi74b21TbMkvRq3Bb5ionOr703leD2",
+  "name": "First Last",
+  "location": "San Francisco, CA",
+  "description": "Description of user to be shared with other users",
+
+}
+
+```
+
+#### 500 (Internal Server Error)
+
+> If there is a server or database error, the endpoint will return an HTTP response with a status code `500` and a body as below.
+
+_example:_
+
+```
+
+{
+  "message": "Error getting users"
+}
+
+```
+
+## **GET USER BY ID**
+
+### **Get user profile by user id**
+
+_Method Url:_ `/api/users/:id`
+
+_HTTP method:_ **[GET]**
+
+#### Headers
+
+| name            | type   | required | description              |
+| --------------- | ------ | -------- | ------------------------ |
+| `Content-Type`  | String | Yes      | Must be application/json |
+| `Authorization` | String | Yes      | JSON Web Token           |
+
+#### Response
+
+##### 200 (OK)
+
+> If the user profile is found in the database, the endpoint will return an HTTP response with a status code 200 and a body as below.
+
+_example:_
+
+```
+
+{
+  "id": 1,
+  "username": "username"
+  "password": "$2a$10$PNjMLdKfpOmusTou0JC6qOvhi74b21TbMkvRq3Bb5ionOr703leD2",
+  "name": "First Last",
+  "location": "San Francisco, CA",
+  "description": "Description of user to be shared with other users",
+}
+
+```
+
+#### 500 (Internal Server Error)
+
+> If there is a server or database error, the endpoint will return an HTTP response with a status code `500` and a body as below.
+
+_example:_
+
+```
+
+{
+  "message": "Sorry, but something went wrong while getting that user profile"
+}
+
+```
+
+## **UPDATE USER**
+
+### **Update a user by user id**
+
+_Method Url:_ `/api/users/:id`
+
+_HTTP method:_ **[PUT]**
+
+#### Headers
+
+| name            | type   | required | description              |
+| --------------- | ------ | -------- | ------------------------ |
+| `Content-Type`  | String | Yes      | Must be application/json |
+| `Authorization` | String | Yes      | JSON Web Token           |
+
+#### Parameters
+
+| name | type    | required | description             |
+| ---- | ------- | -------- | ----------------------- |
+| id   | Integer | Yes      | ID of a specific seeker |
+
+#### Body
+
+| name          | type   | required | description |
+| ------------- | ------ | -------- | ----------- |
+| `username`    | String | No       |             |
+| `name`        | String | No       |             |
+| `location`    | String | No       |             |
+| `description` | String | No       |             |
+
+_example:_
+
+```
+
+{
+  "username": "username",
+  "name": "First Last",
+  "location": "Brooklyn, NY",
+  "description": "description of user"
+}
+
+```
+
+#### Response
+
+##### 200 (OK)
+
+> If a seeker with the specified ID in the URL parameters is updated successfully in the database, the endpoint will return an HTTP response with a status code `200` and a body as below.
+
+_example:_
+
+```
+
+{
+  "message": `Your profile has been successfully updated`
+}
+
+```
+
+#### 500 (Internal Server Error)
+
+> If there is a server or database error, the endpoint will return an HTTP response with a status code `500` and a body as below.
+
+_example:_
+
+```
+
+{
+  "message": "Sorry, but something went wrong while updating that profile"
+}
+
+```
+
+## **DELETE SEEKER**
+
+### **Delete a seeker by user id**
+
+_Method Url:_ `/api/users/:id`
+
+_HTTP method:_ **[DELETE]**
+
+#### Headers
+
+| name            | type   | required | description              |
+| --------------- | ------ | -------- | ------------------------ |
+| `Content-Type`  | String | Yes      | Must be application/json |
+| `Authorization` | String | Yes      | JSON Web Token           |
+
+#### Parameters
+
+| name | type    | required | description             |
+| ---- | ------- | -------- | ----------------------- |
+| id   | Integer | Yes      | ID of a specific seeker |
+
+#### Response
+
+##### 200 (OK)
+
+> If a seeker with the specified ID in the URL parameters is deleted successfully in the database, the endpoint will return an HTTP response with a status code `200` and a body as below.
+
+_example:_
+
+```
+
+{
+  "message": "1 user was successfully deleted"
+}
+
+```
+
+#### 500 (Bad Request)
+
+> If you send in invalid fields, the endpoint will return an HTTP response with a status code `500` and a body as below.
+
+_example:_
+
+```
+
+{
+  "message": "Sorry, but something went wrong while deleting that user"
+}
+
+```
