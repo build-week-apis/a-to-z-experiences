@@ -1,4 +1,4 @@
-const Experiences = require("../helpers.js");
+const Experiences = require("../experiences/experiences_models.js");
 
 module.exports = server => {
   server.get("/api/experiences", experiences);

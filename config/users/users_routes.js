@@ -1,4 +1,4 @@
-const Users = require("../helpers.js");
+const Users = require("../users/user_models.js");
 
 module.exports = server => {
   server.get("/api/users", users);
