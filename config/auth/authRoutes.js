@@ -1,5 +1,5 @@
 // const axios = require("axios");
-const Users = require("../helpers.js");
+const Users = require("../auth/authModels.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { authenticate, generateToken } = require("../../auth/authenticate");
