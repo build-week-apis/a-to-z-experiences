@@ -113,11 +113,13 @@ function addUsersAttendingExperiences(req, res) {
     });
 }
 
-///// DELETE ATTENDING //////
+///// DELETE ATTENDING /////
 function deleteAttendingExperience(req, res) {
-  const id = req.params.id;
-  Users.deleteUsersAttendingExperiences(id)
+  const notAttend = req.body;
+
+  Users.deleteUsersAttendingExperiences(notAttend)
     .then(deleted => {
+      console.log("experience?:", deleted);
       res
         .status(200)
         .json({ message: `You are no longer attending this experience.` });

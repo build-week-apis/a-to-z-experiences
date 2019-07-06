@@ -63,15 +63,18 @@ async function getUsersAttendingExperiences(id) {
 }
 
 async function deleteUsersAttendingExperiences(id) {
-  try {
-    console.log("id:", id);
-    const event = await db("attendance")
-      .join("experiences", "attendance.experience_id", "experiences.id")
-      .where("attendance.user_id", id)
-      .del(id);
+  // try {
+  //   console.log("id:", id);
+  //   const event = await db("attendance")
+  //     .join("experiences", "attendance.experience_id", "experiences.id")
+  //     .where("attendance.user_id", id)
+  //     .del(event);
 
-    return "user.username", event;
-  } catch (error) {}
+  //   return "user.username", event;
+  // } catch (error) {}
+  const id = await db("attendance").del(attend);
+
+  return id;
 }
 
 async function addUsersAttendingExperiences(attend) {
